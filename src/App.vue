@@ -1,13 +1,25 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
+      <router-link to="/">
+        <b-button @click="clickMe">Click Me</b-button></router-link
+      >
+      |
       <router-link to="/about">About</router-link>
     </nav>
     <router-view />
   </div>
 </template>
-
+<script>
+export default {
+  methods: {
+    clickMe() {
+      console.log(this.$buefy);
+      this.$buefy.notification.open("Clicked!!");
+    },
+  },
+};
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
