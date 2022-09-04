@@ -1,44 +1,25 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">
-        <b-button @click="clickMe">Click Me</b-button></router-link
-      >
-      |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view />
-  </div>
+  <v-app>
+    <app-nav></app-nav>
+    <v-main class="app-container">
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
+
 <script>
+import AppNav from "./components/AppNav.vue";
 export default {
-  methods: {
-    clickMe() {
-      console.log(this.$buefy);
-      this.$buefy.notification.open("Clicked!!");
-    },
-  },
+  components: { AppNav },
+  name: "App",
+
+  data: () => ({
+    //
+  }),
 };
 </script>
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.app-container {
+  background-color: #f8f9fd !important;
 }
 </style>
