@@ -89,19 +89,12 @@ export default {
     };
   },
   watch: {
-    "form.phone"(value) {
-      if (value === "") {
-        return "";
-      } else {
-        let v = value;
-
-        v = v.replace(/\D/g, "");
-
-        v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-
-        v = v.replace(/(\d)(\d{4})$/, "$1-$2");
-        return (this.form.phone = v);
-      }
+    "form.phone"() {
+      let v = this.form.phone;
+      v = v.replace(/\D/g, "");
+      v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
+      v = v.replace(/(\d)(\d{4})$/, "$1-$2");
+      return (this.form.phone = v);
     },
   },
   computed: {
@@ -112,11 +105,17 @@ export default {
     },
   },
   mounted() {
-    this.form = { ...this.dataform };
+    if (this.mode === "edit") this.form = { ...this.dataform };
   },
   methods: {
     save() {
-      this.$store.dispatch("SAVE", { mode: this.mode, form: this.form });
+      if (this.mode !== "") {
+        console.log(this.mode);
+        this.$store.dispatch("UPDATE", this.form);
+      } else {
+        console.log("save");
+        this.$store.dispatch("SAVE", this.form);
+      }
     },
     close() {
       this.$emit("close");

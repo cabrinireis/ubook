@@ -1,7 +1,7 @@
 <template>
   <div>
     <hello-world @open="($event) => (dialog = $event)" />
-    <v-dialog v-model="dialog" width="500">
+    <v-dialog v-if="dialog" v-model="dialog" width="500">
       <app-form @close="dialog = false" />
     </v-dialog>
   </div>

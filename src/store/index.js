@@ -31,7 +31,7 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async SAVE({ commit }, value) {
+    async SAVE({ commit, dispatch }, value) {
       await fetch("/api/users/", {
         method: "POST",
         body: JSON.stringify(value),
@@ -39,7 +39,26 @@ export default new Vuex.Store({
         .then((res) => {
           if (res) {
             commit("SET_NOTIFICATION", "Contato Inserido com Sucesso");
-            router.push("/list");
+            if (router.currentRoute.name === "home") {
+              router.push("/list");
+            } else {
+              dispatch("GET_CONTACT");
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    async UPDATE({ commit, dispatch }, value) {
+      await fetch(`/api/users/${value.id}`, {
+        method: "POST",
+        body: JSON.stringify(value),
+      })
+        .then((res) => {
+          if (res) {
+            commit("SET_NOTIFICATION", "Contato Editado com Sucesso");
+            commit("SET_MODAL", false);
+
+            dispatch("GET_CONTACT");
           }
         })
         .catch((err) => console.log(err));
