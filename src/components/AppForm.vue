@@ -110,11 +110,11 @@ export default {
   methods: {
     save() {
       if (this.mode !== "") {
-        console.log(this.mode);
         this.$store.dispatch("UPDATE", this.form);
+        this.$emit("close");
       } else {
-        console.log("save");
         this.$store.dispatch("SAVE", this.form);
+        this.$emit("close");
       }
     },
     close() {

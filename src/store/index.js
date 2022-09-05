@@ -24,10 +24,11 @@ export default new Vuex.Store({
     SET_CONTACTS(state, data) {
       state.contactList = data;
     },
-    SET_NOTIFICATION(state, text) {
-      state.notification.type = "error";
-      state.notification.active = true;
-      state.notification.text = text;
+    SET_NOTIFICATION(state, notify) {
+      // state.notification.type = "error";
+      // state.notification.active = true;
+      // state.notification.text = text;z
+      state.notification = { ...notify };
     },
   },
   actions: {
@@ -38,7 +39,11 @@ export default new Vuex.Store({
       })
         .then((res) => {
           if (res) {
-            commit("SET_NOTIFICATION", "Contato Inserido com Sucesso");
+            commit("SET_NOTIFICATION", {
+              type: "success",
+              active: true,
+              text: "Contato adicionado com sucesso.",
+            });
             if (router.currentRoute.name === "home") {
               router.push("/list");
             } else {

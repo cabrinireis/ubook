@@ -31,6 +31,17 @@ export default {
       notification: (state) => state.notification,
     }),
   },
+  watch: {
+    notification(newValue) {
+      if (newValue.active) {
+        var temp = setTimeout(() => {
+          this.$store.commit("SET_NOTIFICATION", false);
+        }, 5000);
+      } else {
+        clearTimeout(temp);
+      }
+    },
+  },
 };
 </script>
 <style lang="scss">

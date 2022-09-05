@@ -6,8 +6,18 @@
         :items="list"
         :items-per-page="10"
         class="elevation-1 app-list"
+        :item-key="'id'"
+        :item-class="() => 'itemrow'"
         hide-default-footer
       >
+        <!-- <template #item="props">
+          <tr data-test="item" class="rowtemp">
+            <td>{{ props.item.name }}</td>
+            <td>{{ props.item.email }}</td>
+            <td>{{ props.item.phone }}</td>
+          </tr>
+        </template> -->
+
         <template #[`item.phone`]="{ item }">
           <td>{{ item.phone }}</td>
         </template>
@@ -79,17 +89,28 @@ export default {
       this.formEdit = null;
       this.$store.commit("SET_MODAL", false);
     },
+
     ...mapActions({
       getList: "GET_CONTACT",
     }),
   },
-
+  watch: {
+    list(val) {
+      if (val) {
+        const lasRow = document.querySelectorAll(".rowclass");
+        const index = lasRow.length;
+        console.log(index);
+        console.log(lasRow[index]);
+      }
+    },
+  },
   computed: {
     ...mapState({
       active: (state) => state.modalActive,
       list: (state) => state.contactList,
     }),
   },
+
   created() {
     this.getList();
   },
@@ -104,8 +125,18 @@ export default {
     }
   }
 }
-.aaa {
-  color: #9198af !important;
-  font-weight: normal;
+tbody tr:last-child {
+  background: #fce97f;
+  animation: fadeBackground 10s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeBackground {
+  from {
+    background-color: #fff3f2;
+  }
+  to {
+    background-color: #ffff;
+  }
 }
 </style>
