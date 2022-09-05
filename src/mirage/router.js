@@ -8,6 +8,7 @@ export default function routes() {
 
   this.post("/users/", function (schema, request) {
     const data = JSON.parse(request.requestBody);
+    console.log(data);
     return schema.users.create(data);
   });
 }

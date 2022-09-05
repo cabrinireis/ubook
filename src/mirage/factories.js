@@ -6,5 +6,11 @@ export default {
     name() {
       return faker.name.fullName();
     },
+    email() {
+      return faker.internet.email();
+    },
+    phone() {
+      return faker.phone.number("(62)#####-####");
+    },
   }),
 };
