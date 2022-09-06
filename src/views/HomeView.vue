@@ -1,6 +1,6 @@
 <template>
   <div>
-    <hello-world @open="($event) => (dialog = $event)" />
+    <page-home @open="($event) => (dialog = $event)" />
     <v-dialog v-if="dialog" v-model="dialog" width="500">
       <app-form @close="dialog = false" />
     </v-dialog>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+// import pageHome from "../Pages/home.vue";
 
 export default {
   components: {
-    HelloWorld,
+    pageHome: () => import("@/Pages/home.vue"),
     AppForm: () => import("@/components/AppForm.vue"),
   },
 

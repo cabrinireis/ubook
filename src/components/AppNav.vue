@@ -14,7 +14,7 @@
     </div>
     <app-button-add v-if="routerName !== 'home'" @click.native="modal" />
     <v-text-field
-      class="input-search col-lg-8"
+      class="input-search col-xl-9 col-lg-8"
       flat
       appendIcon="mdi-magnify"
       v-model="search"

@@ -14,9 +14,6 @@
         <p class="subheading font-weight-regular">
           Nenhum contato foi criado ainda.
         </p>
-        <!-- <v-btn rounded class="app-btn" @click="modal"
-          ><v-icon>mdi-plus</v-icon> Criar contato</v-btn
-        > -->
         <app-button-add @click.native="modal" />
       </v-col>
     </v-row>
@@ -24,9 +21,10 @@
 </template>
 
 <script>
-import AppButtonAdd from "./AppButtonAdd.vue";
 export default {
-  components: { AppButtonAdd },
+  components: {
+    AppButtonAdd: () => import("@/components/AppButtonAdd.vue"),
+  },
   name: "HelloWorld",
 
   data: () => ({
@@ -39,13 +37,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-@import "@/styles/variables.scss";
-
-.app-btn {
-  color: $text-primary !important;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 0 0 0.5px $black-8,
-    inset 0 0 0 0.5px $black-8, 0 2px 4px 0.5px $black-8-16 !important;
-  background-color: $light-yellowish-green !important;
-}
-</style>

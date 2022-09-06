@@ -63,7 +63,7 @@
           :disabled="valid"
           @click="action"
         >
-          Salvar
+          {{ mode === "remove" ? "Excluir" : "Salvar" }}
         </v-btn>
       </v-card-actions>
     </v-card>
