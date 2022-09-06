@@ -10,14 +10,6 @@
         :item-class="() => classrow"
         hide-default-footer
       >
-        <!-- <template #item="props">
-          <tr data-test="item" class="rowtemp">
-            <td>{{ props.item.name }}</td>
-            <td>{{ props.item.email }}</td>
-            <td>{{ props.item.phone }}</td>
-          </tr>
-        </template> -->
-
         <template #[`item.phone`]="{ item }">
           <td>{{ item.phone }}</td>
         </template>
@@ -93,7 +85,6 @@ export default {
   watch: {
     notification(val) {
       if (val) {
-        console.log(val);
         this.classrow = "classrow";
       }
     },
