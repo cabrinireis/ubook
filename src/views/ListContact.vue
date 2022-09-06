@@ -80,19 +80,7 @@ export default {
       this.formEdit = edit;
       this.$store.commit("SET_MODAL", true);
     },
-    save() {
-      const data = {
-        name: "Alves",
-      };
-      fetch("/api/users/", {
-        method: "POST",
-        body: JSON.stringify(data),
-      })
-        .then((res) => {
-          if (res) this.list();
-        })
-        .catch((err) => console.log(err));
-    },
+
     close() {
       this.formEdit = null;
       this.$store.commit("SET_MODAL", false);

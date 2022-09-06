@@ -37,7 +37,7 @@ export default new Vuex.Store({
   },
   actions: {
     async SAVE({ commit, dispatch }, value) {
-      await fetch("/api/users/", {
+      await fetch("/api/contacts/", {
         method: "POST",
         body: JSON.stringify(value),
       })
@@ -61,7 +61,7 @@ export default new Vuex.Store({
         });
     },
     async UPDATE({ commit, dispatch }, value) {
-      await fetch(`/api/users/${value.id}`, {
+      await fetch(`/api/contacts/${value.id}`, {
         method: "POST",
         body: JSON.stringify(value),
       })
@@ -83,7 +83,7 @@ export default new Vuex.Store({
         });
     },
     DELETE({ commit, dispatch }, value) {
-      fetch(`/api/users/${value.id}`, {
+      fetch(`/api/contacts/${value.id}`, {
         method: "DELETE",
         body: JSON.stringify(value),
       })
@@ -105,7 +105,7 @@ export default new Vuex.Store({
         });
     },
     async GET_CONTACT({ commit }, state) {
-      let url = "/api/users";
+      let url = "/api/contacts";
       const params = {
         query: state,
       };
@@ -116,7 +116,7 @@ export default new Vuex.Store({
       await fetch(urlPaarams)
         .then((response) => {
           const contacts = JSON.parse(response._bodyText);
-          commit("SET_CONTACTS", contacts.users);
+          commit("SET_CONTACTS", contacts.contacts);
         })
         .catch((error) => {
           commit("SET_NOTIFICATION", setError);
