@@ -37,6 +37,11 @@ export default {
   components: {
     AppButtonAdd,
   },
+  watch: {
+    search(val) {
+      this.$store.dispatch("GET_CONTACT", val);
+    },
+  },
   methods: {
     modal() {
       this.$store.commit("SET_MODAL", true);

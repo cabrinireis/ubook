@@ -6,7 +6,7 @@ export default function routes() {
     const query = request.queryParams.query;
     const data = schema.contacts.all();
     let filter = data.filter((q) => {
-      return q.name.includes(query);
+      return q.name.toLowerCase().includes(query);
     });
     console.log("filter", filter);
 
