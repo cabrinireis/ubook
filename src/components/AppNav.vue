@@ -27,7 +27,6 @@
   </v-app-bar>
 </template>
 <script>
-import AppButtonAdd from "./AppButtonAdd.vue";
 export default {
   data() {
     return {
@@ -35,7 +34,7 @@ export default {
     };
   },
   components: {
-    AppButtonAdd,
+    AppButtonAdd: () => import("./AppButtonAdd.vue"),
   },
   watch: {
     search(val) {

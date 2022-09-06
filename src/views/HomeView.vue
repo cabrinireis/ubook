@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// import pageHome from "../Pages/home.vue";
-
 export default {
   components: {
     pageHome: () => import("@/Pages/home.vue"),
