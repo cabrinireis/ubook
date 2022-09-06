@@ -7,7 +7,7 @@
         :items-per-page="10"
         class="elevation-1 app-list"
         :item-key="'id'"
-        :item-class="() => 'itemrow'"
+        :item-class="() => classrow"
         hide-default-footer
       >
         <!-- <template #item="props">
@@ -25,7 +25,9 @@
           <v-icon small class="mr-2" data-test="update" @click="edit(item)">
             mdi-pencil
           </v-icon>
-          <v-icon small data-test="delete"> mdi-delete :id="item"</v-icon>
+          <v-icon small data-test="delete" @click="remove(item)">
+            mdi-delete
+          </v-icon>
         </template>
       </v-data-table>
       <v-dialog v-if="active" v-model="active" width="500">
@@ -44,6 +46,7 @@ export default {
   data() {
     return {
       users: [],
+      classrow: "",
       mode: "",
       dialog: false,
       formEdit: {},
@@ -67,6 +70,11 @@ export default {
     };
   },
   methods: {
+    remove(remove) {
+      this.mode = "remove";
+      this.formEdit = remove;
+      this.$store.commit("SET_MODAL", true);
+    },
     edit(edit) {
       this.mode = "edit";
       this.formEdit = edit;
@@ -95,24 +103,23 @@ export default {
     }),
   },
   watch: {
-    list(val) {
+    notification(val) {
       if (val) {
-        const lasRow = document.querySelectorAll(".rowclass");
-        const index = lasRow.length;
-        console.log(index);
-        console.log(lasRow[index]);
+        console.log(val);
+        this.classrow = "classrow";
       }
     },
   },
   computed: {
     ...mapState({
+      notification: (state) => state.notification.active,
       active: (state) => state.modalActive,
       list: (state) => state.contactList,
     }),
   },
-
   created() {
     this.getList();
+    if (this.notification) this.classrow = "classrow";
   },
 };
 </script>
@@ -125,7 +132,7 @@ export default {
     }
   }
 }
-tbody tr:last-child {
+tbody .classrow:last-child {
   background: #fce97f;
   animation: fadeBackground 10s;
   animation-fill-mode: forwards;

@@ -60,7 +60,30 @@ export default new Vuex.Store({
       })
         .then((res) => {
           if (res) {
-            commit("SET_NOTIFICATION", "Contato Editado com Sucesso");
+            commit("SET_NOTIFICATION", {
+              type: "success",
+              active: true,
+              text: "Contato editado com sucesso.",
+            });
+            commit("SET_MODAL", false);
+
+            dispatch("GET_CONTACT");
+          }
+        })
+        .catch((err) => console.log(err));
+    },
+    DELETE({ commit, dispatch }, value) {
+      fetch(`/api/users/${value.id}`, {
+        method: "DELETE",
+        body: JSON.stringify(value),
+      })
+        .then((res) => {
+          if (res) {
+            commit("SET_NOTIFICATION", {
+              type: "success",
+              active: true,
+              text: "Contato Excluido com sucesso.",
+            });
             commit("SET_MODAL", false);
 
             dispatch("GET_CONTACT");

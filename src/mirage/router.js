@@ -18,4 +18,11 @@ export default function routes() {
     console.log(body);
     return contact.update(body);
   });
+
+  this.delete(`/users/:id`, function (schema, request) {
+    const id = request.params.id;
+    console.log(request);
+    const item = schema.users.find(id);
+    return item.destroy();
+  });
 }

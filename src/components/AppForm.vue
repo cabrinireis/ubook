@@ -2,12 +2,12 @@
   <div class="text-center">
     <v-card>
       <v-card-title class="text-h7 app-ModalTitle">
-        {{ mode === "edit" ? "Editar contato" : "Criar Novo contato" }}
+        {{ setTitle }}
       </v-card-title>
       <v-divider></v-divider>
 
       <v-card-text>
-        <v-container>
+        <v-container v-if="mode !== 'remove'">
           <v-row>
             <v-col class="text-left" cols="12" sm="12" md="12">
               <label> Nome</label>
@@ -43,6 +43,9 @@
             </v-col>
           </v-row>
         </v-container>
+        <v-container v-else class="text-left pt-0 pb-13">
+          <span>Deseja realmente excluir o contato?</span>
+        </v-container>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -58,7 +61,7 @@
           light
           rounded
           :disabled="valid"
-          @click="save"
+          @click="action"
         >
           Salvar
         </v-btn>
@@ -86,6 +89,11 @@ export default {
         email: "",
         phone: "",
       },
+      filter: {
+        edit: "Editar contato",
+        remove: "Excluir contato",
+        new: "Criar novo contato",
+      },
     };
   },
   watch: {
@@ -98,20 +106,29 @@ export default {
     },
   },
   computed: {
+    setTitle() {
+      return this.filter?.[this.mode] || this.filter?.["new"];
+    },
     valid() {
-      return this.form.name || this.form.email || this.form.phone
-        ? false
-        : true;
+      if (this.mode === "remove") {
+        return false;
+      } else {
+        return this.form.name || this.form.email || this.form.phone
+          ? false
+          : true;
+      }
     },
   },
   mounted() {
     if (this.mode === "edit") this.form = { ...this.dataform };
   },
   methods: {
-    save() {
-      if (this.mode !== "") {
+    action() {
+      if (this.mode === "edit") {
         this.$store.dispatch("UPDATE", this.form);
         this.$emit("close");
+      } else if (this.mode === "remove") {
+        this.$store.dispatch("DELETE", this.dataform);
       } else {
         this.$store.dispatch("SAVE", this.form);
         this.$emit("close");
