@@ -2,7 +2,11 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
 Vue.use(Vuex);
-
+const setError = {
+  type: "error",
+  active: true,
+  text: "Ocorreu um erro, tente novamente mais tarde.",
+};
 export default new Vuex.Store({
   state: {
     modalActive: false,
@@ -51,7 +55,10 @@ export default new Vuex.Store({
             }
           }
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          commit("NOTIFICATION", setError);
+          console.log(error);
+        });
     },
     async UPDATE({ commit, dispatch }, value) {
       await fetch(`/api/users/${value.id}`, {
@@ -70,7 +77,10 @@ export default new Vuex.Store({
             dispatch("GET_CONTACT");
           }
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          commit("NOTIFICATION", setError);
+          console.log(error);
+        });
     },
     DELETE({ commit, dispatch }, value) {
       fetch(`/api/users/${value.id}`, {
@@ -89,24 +99,27 @@ export default new Vuex.Store({
             dispatch("GET_CONTACT");
           }
         })
-        .catch((err) => console.log(err));
+        .catch((error) => {
+          commit("NOTIFICATION", setError);
+          console.log(error);
+        });
     },
-    async GET_CONTACT({ commit }) {
-      // await fetch("/api/users")
-      //   .then((res) => {
-      //     console.log(res.json());
-      //     const contactList = res.users;
-      //     commit("SET_CONTACTS", contactList);
-      //   })
-      //   .catch((error) => console.log(error));
-
-      await fetch("/api/users")
+    async GET_CONTACT({ commit }, state) {
+      let url = "/api/users";
+      const params = {
+        query: state,
+      };
+      const urlPaarams =
+        state !== undefined
+          ? (url += "?" + new URLSearchParams(params).toString())
+          : url;
+      await fetch(urlPaarams)
         .then((response) => {
           const contacts = JSON.parse(response._bodyText);
           commit("SET_CONTACTS", contacts.users);
         })
         .catch((error) => {
-          //handle error
+          commit("SET_NOTIFICATION", setError);
           console.log(error);
         });
     },

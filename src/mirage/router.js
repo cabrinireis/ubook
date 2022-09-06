@@ -1,8 +1,16 @@
 export default function routes() {
   this.namespace = "api";
 
-  this.get("/users", (schema) => {
-    return schema.users.all();
+  this.get("/users", function (schema, request) {
+    console.log("aa", request.queryParams);
+    const query = request.queryParams.query;
+    const data = schema.users.all();
+    let filter = data.filter((q) => {
+      return q.name.includes(query);
+    });
+    console.log("filter", filter);
+
+    return query !== undefined ? filter : schema.users.all();
   });
 
   this.post("/users/", function (schema, request) {
