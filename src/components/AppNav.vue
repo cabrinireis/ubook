@@ -13,17 +13,19 @@
       </router-link>
     </div>
     <app-button-add v-if="routerName !== 'home'" @click.native="modal" />
-    <v-text-field
-      class="input-search col-xl-9 col-lg-8"
-      flat
-      appendIcon="mdi-magnify"
-      v-model="search"
-      label="Buscar..."
-      hide-details
-      single-line
-      solo
-      dense
-    ></v-text-field>
+    <div class="search">
+      <v-text-field
+        class="input-search"
+        flat
+        appendIcon="mdi-magnify"
+        v-model="search"
+        label="Buscar..."
+        hide-details
+        single-line
+        solo
+        dense
+      ></v-text-field>
+    </div>
   </v-app-bar>
 </template>
 <script>
@@ -58,7 +60,10 @@ export default {
   // gap: calc(24rem - 148px);
   justify-content: space-between;
 }
-.input-search > .v-input__control > .v-input__slot {
-  background-color: #e4e7f4 !important;
+.search {
+  width: 70%;
+  .input-search > .v-input__control > .v-input__slot {
+    background-color: #e4e7f4 !important;
+  }
 }
 </style>
